@@ -1,0 +1,41 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  internalize-proxy:
+    image: easy-proxy
+    container_name: internalize-proxy
+    ports:
+      - "4001:4000"
+    environment:
+      NODE_ENV: production
+      TARGET_SERVER: http://internalize:3000
+      TARGET_BASE_PATH: /
+      X_FORWARDED_HOST: localhost:4001 #must match internalize origin
+
+  internalize:
+    image: internalize
+    restart: always
+    # ports:
+    # - 3000:3000
+    environment:
+      NODE_ENV: production
+      DB_CONN_STRING: mongodb://root:root@internalize-mongo:27017/internalize?authSource=admin
+      # RSA_PUBLIC_KEY: -----BEGIN PUBLIC KEY-----\nyour-public-key\n-----END PUBLIC KEY-----
+      # RSA_PRIVATE_KEY: -----BEGIN RSA PRIVATE KEY-----\nyour-private-key\n-----END RSA PRIVATE KEY-----
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+  
+  internalize-mongo:
+    image: mongo
+    container_name: internalize-mongo
+    restart: always
+    volumes:
+      - mongo-data-db:/data/db
+      - mongo-data-configdb:/data/configdb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+volumes:
+  mongo-data-db:
+  mongo-data-configdb:
