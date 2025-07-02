@@ -1,6 +1,3 @@
-# Use root/example as user/password credentials
-version: '3.1'
-
 services:
   internalize-proxy:
     image: easy-proxy
@@ -11,6 +8,8 @@ services:
       NODE_ENV: production
       TARGET_SERVER: http://internalize:3000
       TARGET_BASE_PATH: /
+      AUTH_SERVER: http://easy-as-app:4000
+      AUTH_RENEW_PATH: /token/renew
       X_FORWARDED_HOST: localhost:4001 #must match internalize origin
 
   internalize:
@@ -30,12 +29,12 @@ services:
     container_name: internalize-mongo
     restart: always
     volumes:
-      - mongo-data-db:/data/db
-      - mongo-data-configdb:/data/configdb
+      - internalize-mongo-data-db:/data/db
+      - internalize-mongo-data-configdb:/data/configdb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
 volumes:
-  mongo-data-db:
-  mongo-data-configdb:
+  internalize-mongo-data-db:
+  internalize-mongo-data-configdb:
