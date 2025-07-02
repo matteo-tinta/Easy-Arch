@@ -1,17 +1,4 @@
 services:
-  internalize-proxy:
-    image: easy-proxy
-    container_name: internalize-proxy
-    ports:
-      - "4001:4000"
-    environment:
-      NODE_ENV: production
-      TARGET_SERVER: http://internalize:3000
-      TARGET_BASE_PATH: /
-      AUTH_SERVER: http://easy-as-app:4000
-      AUTH_RENEW_PATH: /token/renew
-      X_FORWARDED_HOST: localhost:4001 #must match internalize origin
-
   internalize:
     image: internalize
     restart: always
