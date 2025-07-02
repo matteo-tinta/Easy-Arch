@@ -4,24 +4,11 @@ services:
     restart: always
     # ports:
     # - 3000:3000
+    depends_on:
+      - proxy-mongo
     environment:
       NODE_ENV: production
-      DB_CONN_STRING: mongodb://root:root@internalize-mongo:27017/internalize?authSource=admin
+      DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/internalize?authSource=admin
       # RSA_PUBLIC_KEY: -----BEGIN PUBLIC KEY-----\nyour-public-key\n-----END PUBLIC KEY-----
       # RSA_PRIVATE_KEY: -----BEGIN RSA PRIVATE KEY-----\nyour-private-key\n-----END RSA PRIVATE KEY-----
       NODE_TLS_REJECT_UNAUTHORIZED: 0
-  
-  internalize-mongo:
-    image: mongo
-    container_name: internalize-mongo
-    restart: always
-    volumes:
-      - internalize-mongo-data-db:/data/db
-      - internalize-mongo-data-configdb:/data/configdb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-
-volumes:
-  internalize-mongo-data-db:
-  internalize-mongo-data-configdb:

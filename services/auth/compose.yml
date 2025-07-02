@@ -5,23 +5,8 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - easy-as-mongo
+      - proxy-mongo
     environment:
       NODE_ENV: production
-      DB_CONN_STRING: mongodb://test:test@easy-as-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
+      DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
       DB_NAME: as
-    
-  easy-as-mongo:
-    image: mongo:8
-    container_name: easy-as-mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=test
-      - MONGO_INITDB_ROOT_PASSWORD=test
-    volumes:
-      - mongo-data-db:/data/db
-      - mongo-data-configdb:/data/configdb
-    restart: unless-stopped
-
-volumes:
-  mongo-data-db:
-  mongo-data-configdb:

@@ -1,0 +1,16 @@
+services:
+
+  proxy-mongo:
+    image: mongo:8
+    container_name: proxy-mongo
+    restart: always
+    volumes:
+      - proxy-mongo-data-db:/data/db
+      - proxy-mongo-data-configdb:/data/configdb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+volumes:
+  proxy-mongo-data-db:
+  proxy-mongo-data-configdb:
