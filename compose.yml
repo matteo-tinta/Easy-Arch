@@ -11,5 +11,6 @@ services:
         TARGET_BASE_PATH: /
         AUTH_SERVER: http://easy-as-app:4000
         AUTH_RENEW_PATH: /token/renew
+        AUTH_LOGIN_PATH: /token/login
         AUTH_LOGOUT_PATH: /token/logout
         X_FORWARDED_HOST: localhost:4001 #must match internalize origin

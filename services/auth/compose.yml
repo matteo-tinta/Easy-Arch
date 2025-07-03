@@ -2,8 +2,9 @@ services:
   easy-as-app:
     image: easy-as
     container_name: easy-as-app
-    ports:
-      - "4000:4000"
+    # if a new user is needed, use those port and create the new user
+    # ports:
+    #   - "4000:4000"
     depends_on:
       - proxy-mongo
       - internalize
