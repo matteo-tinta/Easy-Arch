@@ -6,7 +6,11 @@ services:
       - "4000:4000"
     depends_on:
       - proxy-mongo
+      - internalize
     environment:
       NODE_ENV: production
       DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
       DB_NAME: as
+      PDP_HOST: http://internalize:3000
+      PDP_ROLE_ENDPOINT: /roles/users/api
+      PDP_INTERROGATE_CALLBACK: http://easy-as-app:4000/token/decode
