@@ -1,0 +1,14 @@
+services:
+  internalize:
+    image: internalize-headless
+    restart: always
+    # ports:
+    # - 3000:3000
+    depends_on:
+      - proxy-mongo
+    environment:
+      NODE_ENV: production
+      DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/internalize?authSource=admin
+      # RSA_PUBLIC_KEY: -----BEGIN PUBLIC KEY-----\nyour-public-key\n-----END PUBLIC KEY-----
+      # RSA_PRIVATE_KEY: -----BEGIN RSA PRIVATE KEY-----\nyour-private-key\n-----END RSA PRIVATE KEY-----
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
