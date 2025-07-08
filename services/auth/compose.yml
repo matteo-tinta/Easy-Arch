@@ -1,6 +1,10 @@
 services:
   easy-as-app:
-    image: easy-as
+    build:
+      context: git@github.com:matteo-tinta/easyas.git#main
+      ssh:
+        - default
+      network: host
     container_name: easy-as-app
     # if a new user is needed, use those port and create the new user
     # ports:

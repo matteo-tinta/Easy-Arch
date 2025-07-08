@@ -1,19 +1,23 @@
 name: proxied_app
 services:
   proxy_app:
-      image: easy-proxy
-      container_name: proxy_app
-      ports:
-        - "4001:4000"
-      extra_hosts:
-        - "host.docker.internal:host-gateway"
-      environment:
-        NODE_ENV: production
-        TARGET_SERVER: http://internalize:3000
-        TARGET_BASE_PATH: /
-        AUTH_SERVER: http://easy-as-app:4000
-        AUTH_RENEW_PATH: /token/renew
-        AUTH_LOGIN_PATH: /token/login
-        AUTH_LOGOUT_PATH: /token/logout
-        X_FORWARDED_HOST: localhost:4001 #must match internalize origin
-        FE_ENDPOINT: "http://host.docker.internal:5173" #local vite development
+    build:
+      context: git@github.com:matteo-tinta/easy-proxy.git#main
+      ssh:
+        - default
+      network: host
+    container_name: proxy_app
+    ports:
+      - "4001:4000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      NODE_ENV: production
+      TARGET_SERVER: http://internalize:3000
+      TARGET_BASE_PATH: /
+      AUTH_SERVER: http://easy-as-app:4000
+      AUTH_RENEW_PATH: /token/renew
+      AUTH_LOGIN_PATH: /token/login
+      AUTH_LOGOUT_PATH: /token/logout
+      X_FORWARDED_HOST: localhost:4001 #must match internalize origin
+      FE_ENDPOINT: "http://host.docker.internal:5173" #local vite development

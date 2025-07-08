@@ -1,6 +1,10 @@
 services:
   internalize:
-    image: internalize-headless
+    build:
+      context: git@github.com:matteo-tinta/internalize.headless.git#main
+      ssh:
+        - default
+      network: host
     restart: always
     # ports:
     # - 3000:3000

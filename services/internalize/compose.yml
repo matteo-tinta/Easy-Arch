@@ -1,6 +1,12 @@
 services:
   internalize:
-    image: internalize
+    build:
+      context: git@github.com:matteo-tinta/internalize.git#main
+      ssh:
+        - default
+      network: host
+      args:
+        - NEXT_PUBLIC_BASE_PATH: /roles
     restart: always
     # ports:
     # - 3000:3000
