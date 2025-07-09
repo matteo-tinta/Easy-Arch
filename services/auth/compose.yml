@@ -1,21 +1,21 @@
 services:
-  easy-as-app:
-    build:
-      context: git@github.com:matteo-tinta/easyas.git#main
-      ssh:
-        - default
-      network: host
-    container_name: easy-as-app
-    # if a new user is needed, use those port and create the new user
-    # ports:
-    #   - "4000:4000"
-    depends_on:
-      - proxy-mongo
-      - internalize
-    environment:
-      NODE_ENV: production
-      DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
-      DB_NAME: as
-      PDP_HOST: http://internalize:4000
-      PDP_ROLE_ENDPOINT: /interrogate
-      PDP_INTERROGATE_CALLBACK: http://easy-as-app:4000/token/decode
+ easy-as-app:
+  build:
+   context: git@github.com:matteo-tinta/easy.iam.authentication.git#main
+   ssh:
+    - default
+   network: host
+  container_name: easy-as-app
+  # if a new user is needed, use those port and create the new user
+  # ports:
+  #   - "4000:4000"
+  depends_on:
+   - proxy-mongo
+   - internalize
+  environment:
+   NODE_ENV: production
+   DB_CONN_STRING: mongodb://root:root@proxy-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
+   DB_NAME: as
+   PDP_HOST: http://internalize:4000
+   PDP_ROLE_ENDPOINT: /interrogate
+   PDP_INTERROGATE_CALLBACK: http://easy-as-app:4000/token/decode

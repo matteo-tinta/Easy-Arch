@@ -2,7 +2,7 @@ name: proxied_app
 services:
  proxy_app:
   build:
-   context: git@github.com:matteo-tinta/easy-proxy.git#main
+   context: git@github.com:matteo-tinta/easy.iam.backend.git#main
    ssh:
     - default
    network: host
