@@ -1,0 +1,18 @@
+services:
+  query:
+    build:
+      context: git@github.com:matteo-tinta/easy.iam.graphql.git#main
+      ssh:
+        - default
+      network: host
+    container_name: query
+    # ports:
+    #   - '5000:5000'
+    depends_on:
+      - proxy-mongo
+      - easy-as-app
+      - internalize
+    environment:
+      NODE_ENV: develop
+      AUTH_CONNECTION_STRING: mongodb://root:root@proxy-mongo:27017/as?authSource=admin&retryWrites=true&w=majority
+      INTERNALIZE_CONNECTION_STRING: mongodb://root:root@proxy-mongo:27017/internalize?authSource=admin&retryWrites=true&w=majority

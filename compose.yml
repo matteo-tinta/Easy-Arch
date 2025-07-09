@@ -11,6 +11,12 @@ services:
    - "4001:4000"
   extra_hosts:
    - "host.docker.internal:host-gateway"
+  restart: always
+  depends_on:
+   - proxy-mongo
+   - easy-as-app
+   - internalize
+   - query
   environment:
    NODE_ENV: production
    TARGET_SERVER: http://internalize:4000
@@ -19,5 +25,6 @@ services:
    AUTH_RENEW_PATH: /token/renew
    AUTH_LOGIN_PATH: /token/login
    AUTH_LOGOUT_PATH: /token/logout
+   QUERY_SERVER: http://query:5000
    X_FORWARDED_HOST: localhost:4001 #must match internalize origin
    FE_ENDPOINT: "http://host.docker.internal:5173" #local vite development
